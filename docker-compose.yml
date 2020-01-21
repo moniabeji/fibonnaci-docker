@@ -1,4 +1,38 @@
-version: 3
+version: '3.3'
 services:
   postgres:
     image: 'postgres:latest'
+  redis:
+    image: 'redis:latest'
+  server:
+    build:
+      dockerfile: Dockerfile.dev
+      context: ./server
+    volumes:
+      # inside /app in th container don't try to override this folder (node_modules)
+      - /app/node_modules
+      - ./server:/app
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - PGUSER=postgres
+      - PGHOST=postgres
+      - PGDATABASE=postgres
+      - PGPASSWORD=postgres_password
+      - PGPORT=5432
+  client:
+    build:
+      dockerfile: Dockerfile.dev
+      context: ./client
+    volumes:
+      # inside /app in th container don't try to override this folder (node_modules)
+      - /app/node_modules
+      - ./cient:/app
+  worker:
+    build:
+      dockerfile: Dockerfile.dev
+      context: ./worker
+    volumes:
+      # inside /app in th container don't try to override this folder (node_modules)
+      - /app/node_modules
+      - ./worker    :/app
