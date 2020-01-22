@@ -22,6 +22,8 @@ sudo chmod +x /usr/local/bin/docker-compose
 
 # install react app
 npx create-react-app client
+
+
 ```
 
 # ERROS IN some installation
@@ -37,4 +39,7 @@ npx create-react-app client
  rm -f /bin/node
  ln -s /usr/local/bin/node /bin/node
  n stable
+
+ ***fix create react app
+ export PATH=/usr/local/bin:$PATH
 ```
